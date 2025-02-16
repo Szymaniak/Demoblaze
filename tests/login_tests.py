@@ -1,8 +1,11 @@
-from os import access, wait3
+from ddt import data, unpack, ddt
 
+import test_data.test_data
 from tests.base_test import BaseTest
+from test_data.test_data import DataReader
 from time import sleep
 
+@ddt
 class LoginTest(BaseTest):
     def setUp(self):
         super().setUp()
@@ -19,13 +22,16 @@ class LoginTest(BaseTest):
         self.login_page.confirm_alert()
         sleep(2)
 
-    def testValidLogin(self):
-        username = "tester_alk"
+
+    @data(*DataReader.get_csv_data("../test_data/valid_login_credentials.csv"))
+    @unpack
+    def testValidLogin(self, username, password):
+        #username = "tester_alk"
         #wpisz login
-        self.login_page.enter_username("tester_alk")
+        self.login_page.enter_username(username)
         sleep(3)
         #wpisz hasło
-        self.login_page.enter_password("haslo")
+        self.login_page.enter_password(password)
         #naciśnij Log in
         self.login_page.click_log_in()
         #sprawdz czy na stronie jest Welcome tester_alk
