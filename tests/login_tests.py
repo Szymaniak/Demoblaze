@@ -32,4 +32,8 @@ class LoginTest(BaseTest):
         self.assertEqual(F"Welcome {username}",self.home_page.get_welcome_user_name_text())
         #sprawdz czy mozna kliknąć logout
         self.home_page.click_log_out()
+        self.assertEqual("Log in",self.home_page.get_log_in_text())
+        self.assertEqual("Sign up",self.home_page.get_sign_up_text())
+
+        sleep(5)
         pass

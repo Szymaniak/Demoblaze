@@ -13,6 +13,7 @@ class HomePageLocators:
     LOG_IN_A = (By.ID, "login2") # dużymi literami piszemy stałą a nie zmienna, to jest krotka bo jej nie zmianiamy
     LOG_OUT_A = (By.ID, "logout2") # dużymi literami piszemy stałą a nie zmienna, to jest krotka bo jej nie zmianiamy
     LOGGED_USER_NAME = (By.ID, "nameofuser")
+    SIGN_UP_A = (By.ID, "signin2")
 
     pass
 
@@ -38,6 +39,7 @@ class HomePage(BasePage):
         :return:
         """
         # Find button log in and click it
+        self.wait_5s.until(EC.element_to_be_clickable(HomePageLocators.LOG_OUT_A))
         self.driver.find_element(*HomePageLocators.LOG_OUT_A).click() # rozpakowanie krotki, zamiast jednego elemntu krotka są dwa elementy z krotki, gwiazdką można też spakować do krotki
 
 
@@ -61,3 +63,19 @@ class HomePage(BasePage):
         """
         self.wait_5s.until(EC.text_to_be_present_in_element(HomePageLocators.LOGGED_USER_NAME, "Welcome"))
         return self.driver.find_element(*HomePageLocators.LOGGED_USER_NAME).text
+
+    def get_log_in_text(self):
+        """
+        gets Welcome <USERNAME> message from top right of the page
+        :return: Welcome <USERNAME> text
+        """
+        self.wait_5s.until(EC.text_to_be_present_in_element(HomePageLocators.LOG_IN_A, "Log"))
+        return self.driver.find_element(*HomePageLocators.LOG_IN_A).text
+
+    def get_sign_up_text(self):
+        """
+        gets Welcome <USERNAME> message from top right of the page
+        :return: Welcome <USERNAME> text
+        """
+        self.wait_5s.until(EC.text_to_be_present_in_element(HomePageLocators.SIGN_UP_A, "Sign"))
+        return self.driver.find_element(*HomePageLocators.SIGN_UP_A).text
